@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context="edu.colorado.keren_megorycohen.ember.Health"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fillViewport="true">
+
+	<LinearLayout
+		android:id="@+id/health"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="20dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/nicotine_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			android:text="Nicotine"/>
+
+		<TextView
+			android:id="@+id/nicotine"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="10sp"
+			android:text="@string/nicotine"/>
+
+		<ProgressBar
+			android:id="@+id/progress_nicotine"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_weight="0"
+			android:layout_height="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginBottom="10dp"/>
+
+		<TextView
+			android:id="@+id/lung_capacity_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			android:text="Lung Capacity"/>
+
+		<TextView
+			android:id="@+id/lung_capacity"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="10sp"
+			android:text="@string/lung_capacity"/>
+
+		<ProgressBar
+			android:id="@+id/progress_lung_capacity"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_weight="0"
+			android:layout_height="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginBottom="10dp"/>
+
+		<TextView
+			android:id="@+id/lung_hairs_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			android:text="Lung Hairs"/>
+
+		<TextView
+			android:id="@+id/lung_hairs"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="10sp"
+			android:text="@string/lung_hairs"/>
+
+		<ProgressBar
+			android:id="@+id/progress_lung_hairs"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_weight="0"
+			android:layout_height="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginBottom="10dp"/>
+
+		<TextView
+			android:id="@+id/coronary_arteries_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			android:text="Coronary Arteries"/>
+
+		<TextView
+			android:id="@+id/coronary_arteries"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="10sp"
+			android:text="@string/coronary_arteries"/>
+
+		<ProgressBar
+			android:id="@+id/progress_coronary_arteries"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_weight="0"
+			android:layout_height="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginBottom="10dp"/>
+
+		<TextView
+			android:id="@+id/heart_attack_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			android:text="Heart Attack"/>
+
+		<TextView
+			android:id="@+id/heart_attack"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="10sp"
+			android:text="@string/heart_attack"/>
+
+		<ProgressBar
+			android:id="@+id/progress_heart_attack"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_weight="0"
+			android:layout_height="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginBottom="10dp"/>
+
+		<TextView
+			android:id="@+id/stroke_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			android:text="Stroke"/>
+
+		<TextView
+			android:id="@+id/stroke"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="10sp"
+			android:text="@string/stroke"/>
+
+		<ProgressBar
+			android:id="@+id/progress_stroke"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_weight="0"
+			android:layout_height="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginBottom="10dp"/>
+
+		<TextView
+			android:id="@+id/lung_cancer_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			android:text="Lung Cancer"/>
+
+		<TextView
+			android:id="@+id/lung_cancer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="10sp"
+			android:text="@string/lung_cancer"/>
+
+		<ProgressBar
+			android:id="@+id/progress_lung_cancer"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_weight="0"
+			android:layout_height="20dp"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginBottom="10dp"/>
+
+
+	</LinearLayout>
+</ScrollView>

@@ -1,0 +1,23 @@
+<resources>
+	<string name="app_name">Ember</string>
+	<string name="action_settings">Settings</string>
+	<string name="smoked_since">not smoked since:</string>
+	<string name="section_format">Hello World from section: %1$d</string>
+
+	<string name="equals">=</string>
+	<string name="minus">–</string>
+	<string name="plus">+</string>
+	<string name="limit_label">Limit</string>
+	<string name="smoked_label">Smoked</string>
+	<string name="remaining_label">Remaining</string>
+
+	<string name="graph_title">Cigarettes Smoked (Last 7 Days)</string>
+
+	<string name="nicotine">The worst of physical nicotine withdrawal symptoms pass. (1 week)</string>
+	<string name="lung_capacity">Lung function begins to improve, and shortness of breath decreases. (3 months)</string>
+	<string name="lung_hairs">The fine hairs (cilia) start to regrow in the lungs, causing exhaustion and shortess of breath to improve. (9 months)</string>
+	<string name="coronary_arteries">The risk of disease in the coronary vessels is reduced by half. (1 year)</string>
+	<string name="heart_attack">The risk of heart attack drops significantly. (2 years)</string>
+	<string name="stroke">The risk of having a stroke reaches almost that of a non-smoker. (5 years)</string>
+	<string name="lung_cancer">The lungs have almost fully recovered, as pre-cancerous cells are replaced by healthy cells. (10 years)</string>
+</resources>

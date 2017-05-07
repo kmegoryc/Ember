@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	tools:context="edu.colorado.keren_megorycohen.ember.Overview"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<LinearLayout
+		android:id="@+id/overview"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentTop="true"
+		android:layout_marginTop="30dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+		android:layout_centerVertical="true"
+		android:orientation="horizontal">
+
+		<LinearLayout
+			android:id="@+id/limit_layout"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/limit"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="15sp"
+				android:text="TextView"/>
+
+			<TextView
+				android:id="@+id/limit_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:textSize="12sp"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/limit_label"/>
+
+		</LinearLayout>
+
+
+		<TextView
+			android:id="@+id/minus"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center_horizontal"
+			android:textStyle="bold"
+			android:text="@string/minus"
+			android:textSize="18sp"/>
+
+		<LinearLayout
+			android:id="@+id/smoked_layout"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/smoked"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textSize="15sp"
+				android:text="TextView"/>
+
+			<TextView
+				android:id="@+id/smoked_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:textSize="12sp"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/smoked_label"/>
+
+		</LinearLayout>
+
+		<TextView
+			android:id="@+id/equals"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center_horizontal"
+			android:textStyle="bold"
+			android:textSize="15sp"
+			android:text="@string/equals"/>
+
+		<LinearLayout
+			android:id="@+id/remaining_layout"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/remaining"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:textStyle="bold"
+				android:textSize="15sp"
+				android:text="TextView"/>
+
+			<TextView
+				android:id="@+id/remaining_label"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:textSize="12sp"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:text="@string/remaining_label"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<ProgressBar
+		android:id="@+id/progressBar"
+		style="?android:attr/progressBarStyleHorizontal"
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"
+		android:layout_below="@+id/overview"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="20dp"/>
+
+	<LinearLayout
+		android:id="@+id/content"
+		android:background="@color/gray"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/progressBar"
+		android:layout_alignParentBottom="true"
+		android:layout_marginTop="5dp"
+		android:layout_gravity="center"
+		android:layout_centerVertical="true"
+		android:layout_centerHorizontal="true"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:layout_marginStart="20dp"
+			android:textSize="15sp"
+			android:textStyle="italic"
+			android:text="Date"
+			android:textColor="#fff"/>
+
+		<TextView
+			android:id="@+id/last_cigarette"
+			android:layout_width="wrap_content"
+			android:layout_height="40dp"
+			android:layout_marginTop="15dp"
+			android:layout_marginStart="20dp"
+			android:drawableStart="@drawable/calendar_draw"
+			android:drawablePadding="10dp"
+			android:text="last cigarette"
+			android:textStyle="bold"
+			android:textColor="#fff"
+			android:textSize="13sp"/>
+
+		<TextView
+			android:id="@+id/avg_daily_intake"
+			android:layout_width="wrap_content"
+			android:layout_height="40dp"
+			android:layout_marginTop="20dp"
+			android:layout_marginStart="20dp"
+			android:drawableStart="@drawable/cigarette_draw"
+			android:drawablePadding="10dp"
+			android:text="average daily intake"
+			android:textStyle="bold"
+			android:textColor="#fff"
+			android:textSize="13sp"/>
+
+		<TextView
+			android:id="@+id/money_saved"
+			android:layout_width="wrap_content"
+			android:layout_height="40dp"
+			android:layout_marginTop="20dp"
+			android:layout_marginStart="20dp"
+			android:drawableStart="@drawable/money_draw"
+			android:drawablePadding="10dp"
+			android:text="money saved"
+			android:textStyle="bold"
+			android:textColor="#fff"
+			android:textSize="13sp"/>
+
+		<TextView
+			android:id="@+id/end"
+			android:layout_width="wrap_content"
+			android:layout_height="40dp"
+			android:layout_marginTop="10dp"
+			android:layout_marginStart="20dp"
+			android:layout_marginBottom="10dp"
+			android:textSize="15sp"
+			android:textColor="#fff"/>
+
+	</LinearLayout>
+
+	<Button
+		android:id="@+id/button"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		android:layout_alignParentEnd="true"
+		android:layout_alignParentBottom="true"
+		android:layout_marginBottom="80dp"
+		android:layout_marginEnd="20dp"
+		android:background="@drawable/round_button"
+		android:text="@string/plus"
+		android:textSize="20sp"
+		android:textColor="#fff"/>
+
+</RelativeLayout>
