@@ -1,12 +1,19 @@
 package edu.colorado.keren_megorycohen.ember;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by kerenmegory-cohen on 4/24/17.
  */
 
 public class Day {
+
+    //create a public ArrayList consisting of Day objects
+    public static final ArrayList<Day> alldata = new ArrayList<Day>();
 
     //user-specific data
     private int limit;
@@ -18,6 +25,10 @@ public class Day {
     private int day_of_month;
     private int month;
     private int year;
+
+    public Day () {
+        //default constructor required for calls to DataSnapshot.getValue(Day.class)
+    }
 
     //constructor
     public Day(int new_limit, int new_smoked, int new_day_of_year, int new_day_of_month, int new_month, int new_year){
@@ -31,18 +42,19 @@ public class Day {
         this.year = new_year;
     }
 
-    //create a public array of Day type elements (with test data)
-    public static final ArrayList<Day> alldata = new ArrayList<Day>()
-    {
-        {
-            add(new Day(20, 16, 109, 19, 4, 2017));
-            add(new Day(20, 19, 110, 20, 4, 2017));
-            add(new Day(20, 18, 111, 21, 4, 2017));
-            add(new Day(20, 20, 112, 22, 4, 2017));
-            add(new Day(20, 22, 113, 23, 4, 2017));
-            add(new Day(20, 10, 114, 24, 4, 2017));
-        }
-    };
+    //used when writing to the database
+    @Exclude
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("limit", limit);
+        result.put("smoked", smoked);
+        result.put("remaining", remaining);
+        result.put("dayofyear", day_of_year);
+        result.put("dayofmonth", day_of_month);
+        result.put("month", month);
+        result.put("year", year);
+        return result;
+    }
 
     public int getLimit() {
         return limit;

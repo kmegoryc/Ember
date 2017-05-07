@@ -1,7 +1,6 @@
 package edu.colorado.keren_megorycohen.ember;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 import static edu.colorado.keren_megorycohen.ember.Day.alldata;
 
@@ -57,16 +54,16 @@ public class Progress extends Fragment {
         //get graph element
         GraphView graph = (GraphView) view.findViewById(R.id.graph);
 
-        //print last 7 days (debugging)
+        /*//print last 7 days (debugging)
         Log.d("previous", String.valueOf(alldata.get(data_len-6).getSmoked()));
         Log.d("previous", String.valueOf(alldata.get(data_len-5).getSmoked()));
         Log.d("previous", String.valueOf(alldata.get(data_len-4).getSmoked()));
         Log.d("previous", String.valueOf(alldata.get(data_len-3).getSmoked()));
         Log.d("previous", String.valueOf(alldata.get(data_len-2).getSmoked()));
         Log.d("previous", String.valueOf(alldata.get(data_len-1).getSmoked()));
-        Log.d("previous", String.valueOf(alldata.get(data_len).getSmoked()));
+        Log.d("previous", String.valueOf(alldata.get(data_len).getSmoked()));*/
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+        /*LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(alldata.get(data_len-6).getDay_of_year(), alldata.get(data_len-6).getSmoked()),
                 new DataPoint(alldata.get(data_len-5).getDay_of_year(), alldata.get(data_len-5).getSmoked()),
                 new DataPoint(alldata.get(data_len-4).getDay_of_year(), alldata.get(data_len-4).getSmoked()),
@@ -81,7 +78,7 @@ public class Progress extends Fragment {
         graph.addSeries(series);
         graph.setBackgroundColor(0);
         series.setThickness(5);
-        series.setColor(Color.rgb(237, 34, 93));
+        series.setColor(Color.rgb(237, 34, 93));*/
     }
 
 }

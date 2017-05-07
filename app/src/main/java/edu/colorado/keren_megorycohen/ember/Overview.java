@@ -11,6 +11,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Calendar;
 
 import static edu.colorado.keren_megorycohen.ember.Day.alldata;
@@ -19,21 +25,61 @@ import static edu.colorado.keren_megorycohen.ember.Time.time;
 
 public class Overview extends Fragment {
 
+    // Firebase database instance
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    //Firebase database reference
+    DatabaseReference ref = database.getReference();
+
     //global calendar variable
     Calendar atLast = Calendar.getInstance();
 
     double packCost = 5.51;
     double packSize = 20;
 
-
     public Overview() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //read from the database
+        ValueEventListener firebaseListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                //empty the arraylist
+                alldata.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                    //create new Day object
+                    Day newDay = snapshot.getValue(Day.class);
+
+                    //add newDay to our array
+                    alldata.add(newDay);
+
+                    Log.d("firebase", "Value is: " + String.valueOf(newDay.getDay_of_year()));
+                }
+                //read data
+                for(int i = 0; i < alldata.size(); i++) {
+                    Log.d("readin", String.valueOf(alldata.get(i).getDay_of_month()) + "/" + String.valueOf(alldata.get(i).getMonthString()));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("firebase", "Failed to read value.", error.toException());
+            }
+
+        };
+
+        //add listener to our database reference
+        ref.addValueEventListener(firebaseListener);
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_overview, container, false);
     }
@@ -43,39 +89,54 @@ public class Overview extends Fragment {
         super.onStart();
         View view = getView();
 
-        for(int i = 0; i < alldata.size(); i++) {
-            Log.d("wait", String.valueOf(alldata.get(i).getDay_of_month()));
-            Log.d("wait", String.valueOf(alldata.get(i).getMonthString()));
-        }
-
-        /////////////////////
-
-        //ADD DAY DATA
-
         //check for current date
         Calendar rightNow = Calendar.getInstance();
-        int day_of_year = rightNow.get(Calendar.DAY_OF_YEAR);
+        /*int day_of_year = rightNow.get(Calendar.DAY_OF_YEAR);
         int day_of_month = rightNow.get(Calendar.DAY_OF_MONTH);
         int month = rightNow.get(Calendar.MONTH) + 1;
-        int year = rightNow.get(Calendar.YEAR);
+        int year = rightNow.get(Calendar.YEAR);*/
+        int day_of_year = 132;
+        int day_of_month = 12;
+        int month = 5;
+        int year= 2017;
 
-        //store today's data
+        //store today's data as new object
         Day today = new Day(20, 0, day_of_year, day_of_month, month, year);
 
-        //only add today's object to alldata if it hasn't already
-        if(!alldata.contains(today)) {
+        //there are previous days stored
+        if (alldata.size() != 0){
+
+            //if the current date has already been added
+            if(alldata.get(alldata.size()-1).getDay_of_year() == day_of_year){
+                Log.d("contains", "Today was already added to the array. Do nothing.");
+                Log.d("contains", "Array size: " + String.valueOf(alldata.size()));
+            }
+            //if the current date is new
+            else {
+                Log.d("contains", "Today not yet added. Adding it to the array.");
+                //add today to alldata array
+                alldata.add(today);
+                //add to Firebase
+                ref.child(String.valueOf(day_of_year)).setValue(today);
+                Log.d("contains", "Array size: " + String.valueOf(alldata.size()));
+            }
+
+        }
+
+        //array is empty
+        else {
+            Log.d("contains", "Today not found, because the array is empty. Adding it to the array.");
             //add today to alldata array
             alldata.add(today);
             //add to Firebase
-            //ref.child(String.valueOf(day_of_year)).setValue(today);
+            ref.child(String.valueOf(day_of_year)).setValue(today);
+            Log.d("contains", "Array size: " + String.valueOf(alldata.size()));
         }
 
-        //print last item of array (should be today)
+        //print last item of array (today)
         Log.d("alldata", String.valueOf(alldata.get(alldata.size()-1).getLimit()));
         Log.d("alldata", String.valueOf(alldata.get(alldata.size()-1).getSmoked()));
         Log.d("alldata", String.valueOf(alldata.get(alldata.size()-1).getRemaining()));
-
-        //////////////////////
 
         Button button = (Button) view.findViewById(R.id.button);
 
@@ -164,6 +225,7 @@ public class Overview extends Fragment {
         TextView limit = (TextView) view.findViewById(R.id.limit);
         TextView smoked = (TextView) view.findViewById(R.id.smoked);
         TextView remaining = (TextView) view.findViewById(R.id.remaining);
+
         //set overview text
         limit.setText(String.valueOf(alldata.get(alldata.size()-1).getLimit()));
         smoked.setText(String.valueOf(alldata.get(alldata.size()-1).getSmoked()));
@@ -172,12 +234,11 @@ public class Overview extends Fragment {
 
     public void calcAndUpdateAvgDailyIntake(View view) {
 
-
         //average daily intake = day.smoked for the past 7 days
         int sum = 0;
         float avg = 0;
         int count = 0;
-        for (int i = alldata.size()-1; i > alldata.size()-7; i--){
+        for (int i = alldata.size()-1; i >= 0; i--){
             count+=1;
             sum = sum + alldata.get(i).getSmoked();
         }

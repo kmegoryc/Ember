@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "386526520451",
+    "firebase_url": "https://ember-55256.firebaseio.com",
+    "project_id": "ember-55256",
+    "storage_bucket": "ember-55256.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386526520451:android:0adb33d5c3a7b0bd",
+        "android_client_info": {
+          "package_name": "edu.colorado.keren_megorycohen.ember"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386526520451-b70vhkm1fh48723ov385m8eus3qh2o5g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.colorado.keren_megorycohen.ember",
+            "certificate_hash": "a2e16cf0e920e5e6fc5a16ba43a074630b3fcc3a"
+          }
+        },
+        {
+          "client_id": "386526520451-62npmv3f0n97g4ksl341lhare110obc0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjYweDLTzPFtA_UuXCQP54RDcRydO9TQw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386526520451-62npmv3f0n97g4ksl341lhare110obc0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
