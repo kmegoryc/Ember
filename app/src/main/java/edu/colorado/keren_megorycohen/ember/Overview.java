@@ -25,13 +25,18 @@ import static edu.colorado.keren_megorycohen.ember.Time.time;
 
 public class Overview extends Fragment {
 
-    // Firebase database instance
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    //Firebase database reference
     DatabaseReference ref = database.getReference();
 
     //global calendar variable
     Calendar atLast = Calendar.getInstance();
+
+    //check for current date
+    Calendar rightNow = Calendar.getInstance();
+    int day_of_year = rightNow.get(Calendar.DAY_OF_YEAR);
+    int day_of_month = rightNow.get(Calendar.DAY_OF_MONTH);
+    int month = rightNow.get(Calendar.MONTH) + 1;
+    int year = rightNow.get(Calendar.YEAR);
 
     double packCost = 5.51;
     double packSize = 20;
@@ -63,10 +68,6 @@ public class Overview extends Fragment {
 
                     Log.d("firebase", "Value is: " + String.valueOf(newDay.getDay_of_year()));
                 }
-                //read data
-                for(int i = 0; i < alldata.size(); i++) {
-                    Log.d("readin", String.valueOf(alldata.get(i).getDay_of_month()) + "/" + String.valueOf(alldata.get(i).getMonthString()));
-                }
             }
 
             @Override
@@ -89,21 +90,10 @@ public class Overview extends Fragment {
         super.onStart();
         View view = getView();
 
-        //check for current date
-        Calendar rightNow = Calendar.getInstance();
-        /*int day_of_year = rightNow.get(Calendar.DAY_OF_YEAR);
-        int day_of_month = rightNow.get(Calendar.DAY_OF_MONTH);
-        int month = rightNow.get(Calendar.MONTH) + 1;
-        int year = rightNow.get(Calendar.YEAR);*/
-        int day_of_year = 132;
-        int day_of_month = 12;
-        int month = 5;
-        int year= 2017;
-
         //store today's data as new object
         Day today = new Day(20, 0, day_of_year, day_of_month, month, year);
 
-        //there are previous days stored
+        //there are previous days stored in alldata
         if (alldata.size() != 0){
 
             //if the current date has already been added
@@ -111,6 +101,7 @@ public class Overview extends Fragment {
                 Log.d("contains", "Today was already added to the array. Do nothing.");
                 Log.d("contains", "Array size: " + String.valueOf(alldata.size()));
             }
+
             //if the current date is new
             else {
                 Log.d("contains", "Today not yet added. Adding it to the array.");
@@ -134,9 +125,9 @@ public class Overview extends Fragment {
         }
 
         //print last item of array (today)
-        Log.d("alldata", String.valueOf(alldata.get(alldata.size()-1).getLimit()));
-        Log.d("alldata", String.valueOf(alldata.get(alldata.size()-1).getSmoked()));
-        Log.d("alldata", String.valueOf(alldata.get(alldata.size()-1).getRemaining()));
+        Log.d("alldata", "Before add: " + String.valueOf(alldata.get(alldata.size()-1).getLimit()));
+        Log.d("alldata", "Before add: " + String.valueOf(alldata.get(alldata.size()-1).getSmoked()));
+        Log.d("alldata", "Before add: " + String.valueOf(alldata.get(alldata.size()-1).getRemaining()));
 
         Button button = (Button) view.findViewById(R.id.button);
 
@@ -144,17 +135,34 @@ public class Overview extends Fragment {
         {
             public void onClick(View v)
             {
+                /*final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.dialog);
+                dialog.setTitle("Add Recipe");
+                dialog.setCancelable(true);*/
                 //call add cigarette function to update object
                 addCigarette();
             }
         });
 
-        //update overview
-        updateOverview(view);
+        updateAll(view);
 
         //set date
         TextView date = (TextView) view.findViewById(R.id.date);
         date.setText(String.valueOf(alldata.get(alldata.size()-1).getMonth()) + "/" + String.valueOf(alldata.get(alldata.size()-1).getDay_of_month()) + "/" + String.valueOf(alldata.get(alldata.size()-1).getYear()));
+
+        //read data
+        for (int i = alldata.size()-1; i >= 0; i--) {
+            Log.d("alldata", "Value at index " + i + ": " + String.valueOf(alldata.get(i).getDay_of_month()) + "/" + String.valueOf(alldata.get(i).getMonthString()));
+            Log.d("alldata", "Smoked at index " + i + ": " + String.valueOf(alldata.get(i).getSmoked()));
+            Log.d("alldata", "Remaining at index " + i + ": " + String.valueOf(alldata.get(i).getRemaining()));
+        }
+
+    }
+
+    public void updateAll(View view) {
+
+        //update overview
+        updateOverview(view);
 
         //update time since last
         calcAndUpdateTimeSinceLast(view);
@@ -176,28 +184,24 @@ public class Overview extends Fragment {
         //update smoked value
         alldata.get(alldata.size()-1).updateSmoked();
 
+        /*//hashmap to update to firebase child
+        HashMap<String, Object> updated = new HashMap<>();
+        updated.put("smoked", alldata.get(alldata.size()-1).getSmoked());
+        updated.put("remaining", alldata.get(alldata.size()-1).getRemaining());*/
+
+        //update firebase
+        ref.child(String.valueOf(day_of_year)).child("smoked").setValue(alldata.get(alldata.size()-1).getSmoked());
+        ref.child(String.valueOf(day_of_year)).child("remaining").setValue(alldata.get(alldata.size()-1).getRemaining());
+
         //store current time (time at last cigarette)
         atLast = Calendar.getInstance();
 
-        //update overview values
-        updateOverview(view);
-
-        //update time since last
-        calcAndUpdateTimeSinceLast(view);
-
-        //update average daily intake
-        calcAndUpdateAvgDailyIntake(view);
-
-        //update money saved
-        calcAndUpdateMoneySaved(view);
-
-        //update progress bar
-        calcAndUpdateProgressBar(view);
+        updateAll(view);
 
         //print last item of array (should be today)
-        Log.d("alldataafter", String.valueOf(alldata.get(alldata.size()-1).getLimit()));
-        Log.d("alldataafter", String.valueOf(alldata.get(alldata.size()-1).getSmoked()));
-        Log.d("alldataafter", String.valueOf(alldata.get(alldata.size()-1).getRemaining()));
+        Log.d("alldata", "After add: " + String.valueOf(alldata.get(alldata.size()-1).getLimit()));
+        Log.d("alldata", "After add: " + String.valueOf(alldata.get(alldata.size()-1).getSmoked()));
+        Log.d("alldata", "After add: " + String.valueOf(alldata.get(alldata.size()-1).getRemaining()));
     }
 
     public void calcAndUpdateTimeSinceLast(View view) {
@@ -255,7 +259,7 @@ public class Overview extends Fragment {
 
         double remaining = 0;
         double saved = 0;
-        for (int i = 0; i < alldata.size()-1; i++){
+        for (int i = alldata.size()-1; i >= 0; i--){
             remaining = remaining + alldata.get(i).getRemaining();
         }
         saved = remaining * (packCost/packSize);
