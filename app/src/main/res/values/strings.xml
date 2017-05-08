@@ -13,6 +13,13 @@
 
 	<string name="graph_title">Cigarettes Smoked (Last 7 Days)</string>
 
+	<string name="cancel">Cancel</string>
+	<string name="addcigarette">Add Cigarette</string>
+
+	<string name="save">Save</string>
+	<string name="cigarettelimit">Daily Cigarette Limit</string>
+	<string name="packcost">Pack Cost</string>
+
 	<string name="nicotine">The worst of physical nicotine withdrawal symptoms pass. (1 week)</string>
 	<string name="lung_capacity">Lung function begins to improve, and shortness of breath decreases. (3 months)</string>
 	<string name="lung_hairs">The fine hairs (cilia) start to regrow in the lungs, causing exhaustion and shortess of breath to improve. (9 months)</string>

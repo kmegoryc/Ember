@@ -1,6 +1,7 @@
 package edu.colorado.keren_megorycohen.ember;
 
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -49,14 +51,22 @@ public class Overview extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //read from the database
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_overview, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        final View view = getView();
+
         ValueEventListener firebaseListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                //empty the arraylist
+                //empty the array list
                 alldata.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
 
@@ -68,6 +78,23 @@ public class Overview extends Fragment {
 
                     Log.d("firebase", "Value is: " + String.valueOf(newDay.getDay_of_year()));
                 }
+
+                //UPDATE ALL
+
+                //update overview
+                updateOverview(view);
+
+                //update time since last
+                calcAndUpdateTimeSinceLast(view);
+
+                //update average daily intake
+                calcAndUpdateAvgDailyIntake(view);
+
+                //update money saved
+                calcAndUpdateMoneySaved(view);
+
+                //update progress bar
+                calcAndUpdateProgressBar(view);
             }
 
             @Override
@@ -80,15 +107,6 @@ public class Overview extends Fragment {
 
         //add listener to our database reference
         ref.addValueEventListener(firebaseListener);
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_overview, container, false);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        View view = getView();
 
         //store today's data as new object
         Day today = new Day(20, 0, day_of_year, day_of_month, month, year);
@@ -135,16 +153,57 @@ public class Overview extends Fragment {
         {
             public void onClick(View v)
             {
-                /*final Dialog dialog = new Dialog(MainActivity.this);
+                final Dialog dialog = new Dialog(getActivity());
                 dialog.setContentView(R.layout.dialog);
-                dialog.setTitle("Add Recipe");
-                dialog.setCancelable(true);*/
-                //call add cigarette function to update object
-                addCigarette();
+                dialog.setTitle("Add Cigarette?");
+                dialog.setCancelable(true);
+                Button addbutton = (Button) dialog.findViewById(R.id.addButton);
+                Button cancelbutton = (Button) dialog.findViewById(R.id.cancelButton);
+                addbutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //call add cigarette function to update object
+                        addCigarette();
+                        dialog.dismiss();
+                    }
+                });
+                cancelbutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
             }
         });
 
-        updateAll(view);
+        Button settings = (Button) view.findViewById(R.id.settings);
+        settings.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                final Dialog dialog = new Dialog(getActivity());
+                dialog.setContentView(R.layout.settings);
+                dialog.setTitle("Settings");
+                dialog.setCancelable(true);
+                final EditText textlimit = (EditText) dialog.findViewById(R.id.editTextLimit);
+                final EditText textpackcost = (EditText) dialog.findViewById(R.id.packCost);
+                Button savebutton = (Button) dialog.findViewById(R.id.save);
+                savebutton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //set new limit
+                        alldata.get(alldata.size()-1).setLimit(Integer.parseInt(textlimit.getText().toString()));
+                        //set new global pack cost
+                        packCost = Integer.parseInt(textpackcost.getText().toString());
+                        //update new limit to firebase
+                        ref.child(String.valueOf(day_of_year)).child("limit").setValue(alldata.get(alldata.size()-1).getLimit());
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
 
         //set date
         TextView date = (TextView) view.findViewById(R.id.date);
@@ -159,24 +218,6 @@ public class Overview extends Fragment {
 
     }
 
-    public void updateAll(View view) {
-
-        //update overview
-        updateOverview(view);
-
-        //update time since last
-        calcAndUpdateTimeSinceLast(view);
-
-        //update average daily intake
-        calcAndUpdateAvgDailyIntake(view);
-
-        //update money saved
-        calcAndUpdateMoneySaved(view);
-
-        //update progress bar
-        calcAndUpdateProgressBar(view);
-    }
-
     public void addCigarette() {
 
         View view = getView();
@@ -184,19 +225,12 @@ public class Overview extends Fragment {
         //update smoked value
         alldata.get(alldata.size()-1).updateSmoked();
 
-        /*//hashmap to update to firebase child
-        HashMap<String, Object> updated = new HashMap<>();
-        updated.put("smoked", alldata.get(alldata.size()-1).getSmoked());
-        updated.put("remaining", alldata.get(alldata.size()-1).getRemaining());*/
-
-        //update firebase
+        //update to firebase
         ref.child(String.valueOf(day_of_year)).child("smoked").setValue(alldata.get(alldata.size()-1).getSmoked());
         ref.child(String.valueOf(day_of_year)).child("remaining").setValue(alldata.get(alldata.size()-1).getRemaining());
 
         //store current time (time at last cigarette)
         atLast = Calendar.getInstance();
-
-        updateAll(view);
 
         //print last item of array (should be today)
         Log.d("alldata", "After add: " + String.valueOf(alldata.get(alldata.size()-1).getLimit()));

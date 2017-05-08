@@ -60,6 +60,10 @@ public class Day {
         return limit;
     }
 
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     public int getSmoked() {
         return smoked;
     }
